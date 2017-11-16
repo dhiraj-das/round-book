@@ -6,14 +6,12 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Onboarding from './src/Onboarding/OnboardingScreen';
+import AppNavigator from './src/AppNavigator'
 
 export default class App extends Component {
-
-  render() {
-    return (
-      <Onboarding/>
-    );
+  
+  componentWillMount() {
+    AppNavigator.initializeApp();
   }
 }
 

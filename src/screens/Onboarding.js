@@ -3,6 +3,10 @@ import { View, Text, StyleSheet } from 'react-native';
 import Button from '../components/RoundedButton';
 
 export default class Onboarding extends Component {
+    static navigatorStyle = {
+        navBarHidden: true
+      };
+    
     render() {
         const { container, 
             title, 
