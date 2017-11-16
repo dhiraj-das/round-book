@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "270118586468",
+    "firebase_url": "https://round-book-ea6c2.firebaseio.com",
+    "project_id": "round-book-ea6c2",
+    "storage_bucket": "round-book-ea6c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270118586468:android:a490124c0c063eb2",
+        "android_client_info": {
+          "package_name": "com.roundbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270118586468-v0a36rqhpi89gtt85lbpqbc0ims0jbo5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoRRVqNL9OJSCQ-wmh38MrwQN4VPx4IJY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
