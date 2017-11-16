@@ -15,8 +15,7 @@ export default class RoundedButton extends Component {
         return(
             <TouchableOpacity>
                 <View style={styles.container}>
-                <Image source={require('../../assets/img/google.png')} style={styles.image}/>
-                <Text style={styles.text}>Some bla</Text>
+                    <Text style={styles.text}>{this.props.children}</Text>
                 </View>
             </TouchableOpacity>
             
@@ -33,19 +32,17 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         borderWidth: 1,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 10,
+        marginBottom: 10
     },
     text: {
         color: '#f7fbfb',
+        flex: 1,
+        marginLeft: 20,
+        marginRight: 20,
         textAlign: 'center',
         fontFamily: 'CircularStd-Medium',
-        fontSize: 20,
-        marginRight: 30,
-        marginLeft: 10
-    },
-    image: {
-        marginLeft: 30,
-        height: 20,
-        width: 20
+        fontSize: 20
     }
 })

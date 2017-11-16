@@ -6,14 +6,13 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Button from './src/components/RoundedButton';
+import Onboarding from './src/Onboarding/OnboardingScreen';
 
 export default class App extends Component {
+
   render() {
     return (
-      <View style={styles.container}>
-        <Button/>
-      </View>
+      <Onboarding/>
     );
   }
 }
