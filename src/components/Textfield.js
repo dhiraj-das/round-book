@@ -18,6 +18,7 @@ class TextField extends Component {
                     autoCorrect={this.props.autoCorrect}
                     autoCapitalize={this.props.autoCapitalize}
                     secureTextEntry={this.props.secureTextEntry}
+                    underlineColorAndroid='transparent'
                 />
             </View>
         );
@@ -30,14 +31,15 @@ const styles = StyleSheet.create({
         borderColor: '#b9fbfb',
         paddingTop: 5,
         paddingBottom: 5,
-        height: 60
+        marginTop: 5,
+        marginBottom: 5,
+        height: 60,
+        justifyContent: 'flex-start'
     },
     label: {
         fontFamily: 'CircularStd-Medium',
         fontSize: 10,
-        color: '#f7fbfb',
-        flex: 1,
-
+        color: '#f7fbfb'
     },
     textInput: {
         width: null,

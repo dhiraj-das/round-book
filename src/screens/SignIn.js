@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TextField } from '../components';
 
-export default class CreateAccount extends Component {
+export default class SignIn extends Component {
     static navigatorStyle = {
         navBarBackgroundColor: '#007e8c',
         navBarNoBorder: true,
@@ -35,8 +35,9 @@ export default class CreateAccount extends Component {
     
     render() {
         const { container, 
-            title, 
-            textfieldContainer,
+            title,
+            textfield, 
+            loginContainer,
             button 
         } = styles;
 
@@ -44,13 +45,20 @@ export default class CreateAccount extends Component {
 
         return(
             <View style={container}>
-                <Text style={title}>What's your name?</Text>
-                <View style={textfieldContainer}>
+                <Text style={title}>Log In</Text>
+                <View style={loginContainer}>
                     <TextField 
                         text={this.state.fullName}
                         onChange={fullName => this.setState({ fullName })}
                         autoCorrect={false}
-                    >FULL NAME
+                    >EMAIL ADDRESS
+                    </TextField>
+                    <TextField 
+                        text={this.state.fullName}
+                        onChange={fullName => this.setState({ fullName })}
+                        autoCorrect={false}
+                        secureTextEntry
+                    >PASSWORD
                     </TextField>
                 </View>
             </View>
@@ -72,10 +80,9 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold'
     },
-    textfieldContainer: {
+    loginContainer: {
         flex: 1,
         alignSelf: 'stretch',
-        justifyContent: 'flex-start',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 40
