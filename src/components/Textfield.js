@@ -13,7 +13,7 @@ class TextField extends Component {
                 <Text style={styles.label}>{this.props.children}</Text>
                 <TextInput 
                     style={styles.textInput}
-                    onChange={this.props.onChange}
+                    onChangeText={this.props.onChangeText}
                     value={this.props.value}
                     autoCorrect={this.props.autoCorrect}
                     autoCapitalize={this.props.autoCapitalize}

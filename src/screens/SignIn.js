@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { TextField } from '../components';
+import { TextField, CircularButton } from '../components';
 
 export default class SignIn extends Component {
     static navigatorStyle = {
@@ -22,16 +22,42 @@ export default class SignIn extends Component {
     constructor(props) {
         super(props);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-        this.state = { fullName: '' };
+        this.state = {
+            email: '',
+            password: '',
+            nextButtonEnabled: false
+            };
       }
-
-      onNavigatorEvent(event) {
+    
+    onNavigatorEvent(event) {
         if (event.type == 'NavBarButtonPress') {
-          if (event.id == 'back-button') {
-             this.props.navigator.pop({animated: true});
-          }
+            if (event.id == 'back-button') {
+                this.props.navigator.pop({animated: true});
+            }
         }
-      }
+    }
+
+    onNextButtonPress() {
+        console.log('nxt pressed');
+    }
+
+    onTextChange(key, value) {
+        if(key === 'email') {
+            this.setState({email: value});
+        } else {
+            this.setState({password: value})
+        }
+        this.validateFields();
+    }
+
+    validateFields() {
+        const regex = /^(([^<>()\[\]\\.,;:\s@“]+(\.[^<>()\[\]\\.,;:\s@“]+)*)|(“.+“))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(regex.test(this.state.email) === true && this.state.password.length > 5) {
+            this.setState({ nextButtonEnabled: true});
+            return;
+        }
+        this.setState({ nextButtonEnabled: false});
+    }
     
     render() {
         const { container, 
@@ -41,25 +67,29 @@ export default class SignIn extends Component {
             button 
         } = styles;
 
-        console.log(this.state.fullName);
-
         return(
             <View style={container}>
                 <Text style={title}>Log In</Text>
                 <View style={loginContainer}>
                     <TextField 
-                        text={this.state.fullName}
-                        onChange={fullName => this.setState({ fullName })}
+                        value={this.state.email}
+                        onChangeText={(email) => this.onTextChange('email', email)}
                         autoCorrect={false}
                     >EMAIL ADDRESS
                     </TextField>
                     <TextField 
-                        text={this.state.fullName}
-                        onChange={fullName => this.setState({ fullName })}
+                        value={this.state.password}
+                        onChangeText={(password) => this.onTextChange('password', password)}
                         autoCorrect={false}
                         secureTextEntry
                     >PASSWORD
                     </TextField>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <CircularButton
+                        onPress={this.state.nextButtonEnabled ? this.onNextButtonPress.bind(this) : undefined}
+                        enabled={this.state.nextButtonEnabled}
+                    />
                 </View>
             </View>
         )
@@ -81,10 +111,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     loginContainer: {
-        flex: 1,
         alignSelf: 'stretch',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 40
+    },
+    buttonContainer: {
+        //flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignSelf: 'stretch',
+        marginRight: 30,
+        marginTop: 20
     }
 });
