@@ -1,4 +1,4 @@
 import App from './App';
 import { AppRegistry } from 'react-native';
 
-AppRegistry.registerComponent('RoundBook', () => App);
+const app = new App();

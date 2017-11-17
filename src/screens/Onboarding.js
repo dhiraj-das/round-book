@@ -1,12 +1,32 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Button from '../components/RoundedButton';
+import { RoundedButton } from '../components';
 
 export default class Onboarding extends Component {
     static navigatorStyle = {
-        navBarHidden: true
-      };
+        navBarBackgroundColor: '#007e8c',
+        navBarNoBorder: true,
+        topBarElevationShadowEnabled: false
+    };
     
+    onLoginPressed() {
+        this.props.navigator.push({
+            screen: 'RoundBook.Login',
+            animated: true, // does the push have transition animation or does it happen immediately (optional)
+            backButtonTitle: undefined, // override the back button title (optional)
+            backButtonHidden: true, // hide the back button altogether (optional)
+          });
+    }
+
+    onCreateAccountPressed() {
+        this.props.navigator.push({
+            screen: 'RoundBook.CreateAccount',
+            animated: true, // does the push have transition animation or does it happen immediately (optional)
+            backButtonTitle: undefined, // override the back button title (optional)
+            backButtonHidden: true, // hide the back button altogether (optional)
+          });
+    }
+
     render() {
         const { container, 
             title, 
@@ -18,8 +38,18 @@ export default class Onboarding extends Component {
             <View style={container}>
                 <Text style={title}>Welcome to Round Book.</Text>
                 <View style={loginContainer}>
-                    <Button style={button}>Login</Button>
-                    <Button style={button}>Create Account</Button>
+                    <RoundedButton 
+                        style={button}
+                        onPressOut={this.onLoginPressed.bind(this)}
+                    >
+                        Login
+                    </RoundedButton>
+                    <RoundedButton 
+                        style={button}
+                        onPressOut={this.onCreateAccountPressed.bind(this)}
+                    >
+                        Create Account
+                    </RoundedButton>
                 </View>
             </View>
         )
@@ -34,7 +64,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#f7fbfb',
-        paddingTop: 80,
+        paddingTop: 60,
         paddingLeft: 20,
         fontFamily: 'CircularStd-Medium',
         fontSize: 27

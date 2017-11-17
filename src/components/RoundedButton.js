@@ -6,14 +6,14 @@ import {
     Image, 
     TouchableOpacity } from 'react-native';
 
-export default class RoundedButton extends Component {
+class RoundedButton extends Component {
     constructor(props) {
         super(props)
     }
 
     render() {
         return(
-            <TouchableOpacity>
+            <TouchableOpacity onPressOut={this.props.onPressOut}>
                 <View style={styles.container}>
                     <Text style={styles.text}>{this.props.children}</Text>
                 </View>
@@ -45,4 +45,6 @@ const styles = StyleSheet.create({
         fontFamily: 'CircularStd-Medium',
         fontSize: 20
     }
-})
+});
+
+export { RoundedButton };
