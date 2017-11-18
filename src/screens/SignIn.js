@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TextField, CircularButton } from '../components';
+import { isValidEmail } from '../common/TextValidator';
 
 export default class SignIn extends Component {
     static navigatorStyle = {
@@ -38,25 +39,8 @@ export default class SignIn extends Component {
     }
 
     onNextButtonPress() {
-        console.log('nxt pressed');
-    }
-
-    onTextChange(key, value) {
-        if(key === 'email') {
-            this.setState({email: value});
-        } else {
-            this.setState({password: value})
-        }
-        this.validateFields();
-    }
-
-    validateFields() {
-        const regex = /^(([^<>()\[\]\\.,;:\s@“]+(\.[^<>()\[\]\\.,;:\s@“]+)*)|(“.+“))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(regex.test(this.state.email) === true && this.state.password.length > 5) {
-            this.setState({ nextButtonEnabled: true});
-            return;
-        }
-        this.setState({ nextButtonEnabled: false});
+        console.log(this.state.email);
+        console.log(this.state.password);
     }
     
     render() {
@@ -72,14 +56,21 @@ export default class SignIn extends Component {
                 <Text style={title}>Log In</Text>
                 <View style={loginContainer}>
                     <TextField 
-                        value={this.state.email}
-                        onChangeText={(email) => this.onTextChange('email', email)}
                         autoCorrect={false}
+                        autoCapitalize={'none'}
+                        onChangeText={(email) => { 
+                            this.setState({email})
+                            const isValid = isValidEmail(email) && this.state.password.length > 6;
+                            this.setState({ nextButtonEnabled: isValid });
+                        }}
                     >EMAIL ADDRESS
                     </TextField>
                     <TextField 
-                        value={this.state.password}
-                        onChangeText={(password) => this.onTextChange('password', password)}
+                        onChangeText={(password) => {
+                            this.setState({password})
+                            const isValid = isValidEmail(this.state.email) && password.length > 6;
+                            this.setState({ nextButtonEnabled: isValid });
+                        }}
                         autoCorrect={false}
                         secureTextEntry
                     >PASSWORD
@@ -117,7 +108,6 @@ const styles = StyleSheet.create({
         marginTop: 40
     },
     buttonContainer: {
-        //flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignSelf: 'stretch',
