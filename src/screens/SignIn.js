@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TextField, CircularButton } from '../components';
 import { isValidEmail } from '../common/TextValidator';
+import { signInUser } from '../managers/AuthManager';
 
 export default class SignIn extends Component {
     static navigatorStyle = {
@@ -39,8 +40,13 @@ export default class SignIn extends Component {
     }
 
     onNextButtonPress() {
-        console.log(this.state.email);
-        console.log(this.state.password);
+        signInUser(this.state.email, this.state.password, (user, error) => {
+            if(error) {
+                console.log(error);
+                return;
+            }
+            console.log(user);
+        });
     }
     
     render() {
