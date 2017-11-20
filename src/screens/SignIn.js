@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { TextField, CircularButton, ProgressHUD } from '../components';
 import { isValidEmail } from '../common/TextValidator';
-import { signInUser } from '../managers/AuthManager';
+import { signInUser, currentUser } from '../managers/AuthManager';
 import { 
     View, 
     Text, 
     StyleSheet, 
-    ActivityIndicator, 
     ScrollView, 
     Alert 
 } from 'react-native';
@@ -34,7 +33,7 @@ export default class SignIn extends Component {
         this.state = {
             email: '',
             password: '',
-            nextButtonEnabled: false,
+            nextButtonEnabled: true,
             isLoading: false
             };
       }

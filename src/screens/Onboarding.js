@@ -12,18 +12,18 @@ export default class Onboarding extends Component {
     onLoginPressed() {
         this.props.navigator.push({
             screen: 'RoundBook.SignIn',
-            animated: true, // does the push have transition animation or does it happen immediately (optional)
-            backButtonTitle: undefined, // override the back button title (optional)
-            backButtonHidden: true, // hide the back button altogether (optional)
+            animated: true,
+            backButtonTitle: undefined,
+            backButtonHidden: true,
           });
     }
 
     onCreateAccountPressed() {
         this.props.navigator.push({
             screen: 'RoundBook.CreateAccount',
-            animated: true, // does the push have transition animation or does it happen immediately (optional)
-            backButtonTitle: undefined, // override the back button title (optional)
-            backButtonHidden: true, // hide the back button altogether (optional)
+            animated: true,
+            backButtonTitle: undefined,
+            backButtonHidden: true,
           });
     }
 

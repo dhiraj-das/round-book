@@ -6,4 +6,8 @@ function signInUser(email, password, callback) {
         .catch(error => callback(null, error));
 }
 
-export { signInUser };
+function currentUser(callback) {
+    firebase.auth().onAuthStateChanged(user => callback(user));
+}
+
+export { signInUser, currentUser };

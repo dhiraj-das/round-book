@@ -5,7 +5,7 @@ registerScreens();
 
 const initializeApp = Navigation.startSingleScreenApp({
     screen: {
-        screen: 'RoundBook.Onboarding',
+        screen: 'RoundBook.Splash',
         navigatorStyle: {},
         navigatorButtons: {}
     }  

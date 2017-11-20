@@ -11,10 +11,10 @@ class ProgressHUD extends React.Component {
             <View style={styles.container}
                 opacity={this.props.isAnimating ? 1 : 0}
             >
-                <View style={styles.overlay}>
+                <View style={this.props.isBig ? styles.overlayLarge : styles.overlaySmall}>
                     <ActivityIndicator
                         color='black'
-                        size='small'
+                        size={this.props.isBig ? 'large' : 'small'}
                     />
                 </View>
             </View>
@@ -32,14 +32,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    overlay: {
+    overlayLarge: {
         backgroundColor: 'white',
         opacity: 0.7,
-        height: 50,
-        width: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 10
+        borderRadius: 10,
+        height: 75,
+        width: 75
+    },
+    overlaySmall: {
+        backgroundColor: 'white',
+        opacity: 0.7,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        height: 50,
+        width: 50
     }
 });
 
