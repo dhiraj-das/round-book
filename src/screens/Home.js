@@ -21,10 +21,6 @@ export default class Home extends Component {
             }
         }
     }
-    
-    componentDidMount() {
-        //signOut();
-    }
 
     render() {
         const { container, 
@@ -44,11 +40,10 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#007e8c',
         flex: 1
     },
     title: {
-        color: '#f7fbfb',
+        color: 'black',
         paddingTop: 30,
         paddingLeft: 20,
         fontFamily: 'CircularStd-Medium',

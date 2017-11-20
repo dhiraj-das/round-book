@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TextField, CircularButton, ProgressHUD } from '../components';
 import { isValidEmail } from '../common/TextValidator';
 import { signInUser, currentUser } from '../managers/AuthManager';
+import { Navigation } from 'react-native-navigation';
 import { 
     View, 
     Text, 
@@ -51,23 +52,42 @@ export default class SignIn extends Component {
         signInUser(this.state.email, this.state.password, (user, error) => {
             this.setState({isLoading: false});
             if(error) {
-                console.log(error);
                 Alert.alert(
                     'Bummer!',
                     "Couldn't log you in. Please try again!",
                     [
                       {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ],
-                    { cancelable: false }
-                  )
+                    ]
+                )
                 return;
             }
-            this.props.navigator.resetTo({
-                screen: 'RoundBook.Home',
-                animated: true,
-                backButtonHidden: true
-              });
+            this.showHome();
         });
+    }
+
+    showHome() {
+        Navigation.startTabBasedApp({
+            tabs: [
+              {
+                screen: 'RoundBook.Home',
+                icon: require('../../assets/img/allTasks.png'),
+                iconInsets: { 
+                    top: 6, 
+                    bottom: -6
+                  }
+              },
+              {
+                screen: 'RoundBook.Onboarding',
+                icon: require('../../assets/img/incompleteTasks.png'),
+                iconInsets: { 
+                    top: 6,
+                    bottom: -6
+                }
+              }
+            ],
+            passProps: {},
+            animationType: 'slide-down'
+          });
     }
     
     render() {

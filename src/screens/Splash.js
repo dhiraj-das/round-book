@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { ProgressHUD } from '../components/ProgressHUD';
 import { currentUser } from '../managers/AuthManager';
+import { Navigation } from 'react-native-navigation';
 
 export default class Splash extends Component {
     static navigatorStyle = {
@@ -27,16 +28,37 @@ export default class Splash extends Component {
         };
     }
 
+    showHome() {
+        Navigation.startTabBasedApp({
+            tabs: [
+              {
+                screen: 'RoundBook.Home',
+                icon: require('../../assets/img/allTasks.png'),
+                iconInsets: { 
+                    top: 6, 
+                    bottom: -6
+                  }
+              },
+              {
+                screen: 'RoundBook.Onboarding',
+                icon: require('../../assets/img/incompleteTasks.png'),
+                iconInsets: { 
+                    top: 6,
+                    bottom: -6
+                }
+              }
+            ],
+            passProps: {},
+            animationType: 'slide-down'
+          });
+    }
+
     componentDidMount() {
         currentUser(user => {
             this.setState({isLoading: false});
             if(user) {
-                this.props.navigator.resetTo({
-                    screen: 'RoundBook.Home',
-                    animated: true,
-                    animationType: 'fade',
-                    backButtonHidden: true
-                });
+                this.showHome();
+                return;
             }
             this.props.navigator.resetTo({
                 screen: 'RoundBook.Onboarding',
