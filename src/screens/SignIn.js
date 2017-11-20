@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { TextField, CircularButton } from '../components';
+import { TextField, CircularButton, ProgressHUD } from '../components';
 import { isValidEmail } from '../common/TextValidator';
 import { signInUser } from '../managers/AuthManager';
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    ActivityIndicator, 
+    ScrollView, 
+    Alert 
+} from 'react-native';
 
 export default class SignIn extends Component {
     static navigatorStyle = {
@@ -27,7 +34,8 @@ export default class SignIn extends Component {
         this.state = {
             email: '',
             password: '',
-            nextButtonEnabled: false
+            nextButtonEnabled: false,
+            isLoading: false
             };
       }
     
@@ -40,12 +48,26 @@ export default class SignIn extends Component {
     }
 
     onNextButtonPress() {
+        this.setState({isLoading: true});
         signInUser(this.state.email, this.state.password, (user, error) => {
+            this.setState({isLoading: false});
             if(error) {
                 console.log(error);
+                Alert.alert(
+                    'Bummer!',
+                    "Couldn't log you in. Please try again!",
+                    [
+                      {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                  )
                 return;
             }
-            console.log(user);
+            this.props.navigator.resetTo({
+                screen: 'RoundBook.Home',
+                animated: true,
+                backButtonHidden: true
+              });
         });
     }
     
@@ -58,24 +80,23 @@ export default class SignIn extends Component {
         } = styles;
 
         return(
-            <View style={container}>
+            <ScrollView style={container}>
+                <ProgressHUD isAnimating={this.state.isLoading}/>
                 <Text style={title}>Log In</Text>
                 <View style={loginContainer}>
                     <TextField 
                         autoCorrect={false}
                         autoCapitalize={'none'}
                         onChangeText={(email) => { 
-                            this.setState({email})
-                            const isValid = isValidEmail(email) && this.state.password.length > 6;
-                            this.setState({ nextButtonEnabled: isValid });
+                            const isValid = isValidEmail(email) && this.state.password.length > 5;
+                            this.setState({ email, nextButtonEnabled: isValid });
                         }}
                     >EMAIL ADDRESS
                     </TextField>
                     <TextField 
                         onChangeText={(password) => {
-                            this.setState({password})
-                            const isValid = isValidEmail(this.state.email) && password.length > 6;
-                            this.setState({ nextButtonEnabled: isValid });
+                            const isValid = isValidEmail(this.state.email) && password.length > 5;
+                            this.setState({ password, nextButtonEnabled: isValid });
                         }}
                         autoCorrect={false}
                         secureTextEntry
@@ -85,10 +106,10 @@ export default class SignIn extends Component {
                 <View style={styles.buttonContainer}>
                     <CircularButton
                         onPress={this.state.nextButtonEnabled ? this.onNextButtonPress.bind(this) : undefined}
-                        enabled={this.state.nextButtonEnabled}
+                        enabled={this.state.nextButtonEnabled && !this.state.isLoading }
                     />
                 </View>
-            </View>
+            </ScrollView>
         )
     }
 }
@@ -96,8 +117,7 @@ export default class SignIn extends Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#007e8c',
-        flex: 1,
-        alignItems: 'flex-start'
+        flex: 1
     },
     title: {
         color: '#f7fbfb',
