@@ -10,4 +10,8 @@ function currentUser(callback) {
     firebase.auth().onAuthStateChanged(user => callback(user));
 }
 
-export { signInUser, currentUser };
+function signOut() {
+    firebase.auth().signOut();
+}
+
+export { signInUser, currentUser, signOut };

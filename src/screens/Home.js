@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { signOut } from '../managers/AuthManager';
 
 export default class Home extends Component {
     static navigatorStyle = {
@@ -21,6 +22,10 @@ export default class Home extends Component {
         }
     }
     
+    componentDidMount() {
+        //signOut();
+    }
+
     render() {
         const { container, 
             title,

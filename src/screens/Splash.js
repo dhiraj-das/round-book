@@ -38,6 +38,12 @@ export default class Splash extends Component {
                     backButtonHidden: true
                 });
             }
+            this.props.navigator.resetTo({
+                screen: 'RoundBook.Onboarding',
+                animated: true,
+                animationType: 'fade',
+                backButtonHidden: true
+            });
         });
     }
     
