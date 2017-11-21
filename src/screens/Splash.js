@@ -33,21 +33,31 @@ export default class Splash extends Component {
             tabs: [
               {
                 screen: 'RoundBook.Home',
-                icon: require('../../assets/img/allTasks.png'),
+                icon: require('../../assets/img/all_tasks.png'),
                 iconInsets: { 
                     top: 6, 
                     bottom: -6
                   }
               },
               {
-                screen: 'RoundBook.Onboarding',
-                icon: require('../../assets/img/incompleteTasks.png'),
+                screen: 'RoundBook.Profile',
+                icon: require('../../assets/img/profile.png'),
                 iconInsets: { 
                     top: 6,
                     bottom: -6
                 }
               }
             ],
+            tabsStyle: {
+                tabBarButtonColor: '#1F1F1F',
+                tabBarSelectedButtonColor: '#fa4000',
+                tabBarBackgroundColor: '#FFFFFF'
+            },
+            appStyle: {
+                tabBarButtonColor: '#1F1F1F',
+                tabBarSelectedButtonColor: '#fa4000',
+                tabBarTranslucent: false,
+            },
             passProps: {},
             animationType: 'slide-down'
           });

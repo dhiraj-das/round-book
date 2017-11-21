@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { signOut } from '../managers/AuthManager';
 
-export default class Home extends Component {
+export default class Profile extends Component {
     static navigatorStyle = {
         navBarBackgroundColor: 'white',
         navBarNoBorder: true,
@@ -23,7 +23,7 @@ export default class Home extends Component {
 
         return(
             <View style={container}>
-                <Text style={title}>Home</Text>
+                <Text style={title}>Profile</Text>
             </View>
         )
     }
@@ -31,7 +31,8 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: 'white'
     },
     title: {
         color: 'black',
