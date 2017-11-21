@@ -8,4 +8,6 @@ target 'RoundBook' do
   # Pods for RoundBook
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
 end
