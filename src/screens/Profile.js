@@ -112,9 +112,9 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     profileImage: {
-        height: 50,
-        width: 50,
+        height: 60,
+        width: 60,
         marginRight: 20,
-        borderRadius: 25
+        borderRadius: 30
     }
 });
