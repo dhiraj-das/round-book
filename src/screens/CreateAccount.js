@@ -40,7 +40,12 @@ export default class CreateAccount extends Component {
     onNextButtonPress() {
         this.props.navigator.push({
             screen: 'RoundBook.CreateAccountEmail',
-            passProps: this.state,
+            passProps: { 
+                user: {
+                    name: this.state.fullName,
+                    designation: this.state.designation
+                }
+            },
             animated: true
         });
     }

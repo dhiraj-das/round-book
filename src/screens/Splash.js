@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { ProgressHUD } from '../components/ProgressHUD';
-import { currentUser } from '../managers/AuthManager';
+import firebase from 'react-native-firebase';
 import { Navigation } from 'react-native-navigation';
 
 export default class Splash extends Component {
@@ -64,7 +64,8 @@ export default class Splash extends Component {
     }
 
     componentDidMount() {
-        currentUser(user => {
+        var unsubscriber = firebase.auth().onAuthStateChanged(user => {
+            unsubscriber();
             this.setState({isLoading: false});
             if(user) {
                 this.showHome();

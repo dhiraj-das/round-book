@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { TextField, CircularButton } from '../components';
+import { createUser } from '../managers/AuthManager';
 
 export default class CreateAccountPassword extends Component {
     static navigatorStyle = {
@@ -24,6 +25,9 @@ export default class CreateAccountPassword extends Component {
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.state = { 
             password: '',
+            email: this.props.user.email,
+            name: this.props.user.name,
+            designation: this.props.user.designation,
             nextButtonEnabled: false 
         };
       }
@@ -37,7 +41,20 @@ export default class CreateAccountPassword extends Component {
     }
 
     onNextButtonPress() {
+        const { name, password, email, designation } = this.state;
         
+        createUser(email, password, (user, error) => {
+            if(user) {
+                user.updateProfile({
+                    displayName: name, 
+                    photoUrl: null
+                }).then(
+                    console.log('saved user data')
+                );
+            } else {
+                console.log(error);
+            }
+        });
     }
     
     render() {

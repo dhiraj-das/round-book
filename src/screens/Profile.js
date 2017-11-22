@@ -26,6 +26,8 @@ export default class Profile extends Component {
     }
 
     uploadProfilePicture() {
+        signOut();
+
         var options = {
             title: 'Upload Profile Picture',
             storageOptions: {

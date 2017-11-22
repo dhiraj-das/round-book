@@ -25,9 +25,11 @@ export default class CreateAccountEmail extends Component {
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.state = { 
             email: '',
+            name: this.props.user.name,
+            designation: this.props.user.designation,
             nextButtonEnabled: false
         };
-      }
+    }
 
     onNavigatorEvent(event) {
         if (event.type == 'NavBarButtonPress') {
@@ -40,7 +42,13 @@ export default class CreateAccountEmail extends Component {
     onNextButtonPress() {
         this.props.navigator.push({
             screen: 'RoundBook.CreateAccountPassword',
-            passProps: [this.state, this.props.designation, this.props.fullName],
+            passProps: {
+                user: {
+                    email: this.state.email,
+                    name: this.state.name,
+                    designation: this.state.designation
+                }
+            },
             animated: true
         });
     }
