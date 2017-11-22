@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, Button } from 'react-native';
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    ScrollView, 
+    Image, 
+    Button, 
+    Alert 
+} from 'react-native';
 import { signOut } from '../managers/AuthManager';
 import ImagePicker from 'react-native-image-picker';
 
@@ -12,6 +20,42 @@ export default class Profile extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            profileImage: ''
+        }
+    }
+
+    uploadProfilePicture() {
+        var options = {
+            title: 'Upload Profile Picture',
+            storageOptions: {
+              skipBackup: true,
+              path: 'images'
+            }
+          };
+
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+          
+            if(response.error) {
+                Alert.alert(
+                    undefined,
+                    "Something went wrong. Please try again later!",
+                    [
+                      {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ]
+                )
+                console.log('ImagePicker Error: ', response.error);
+            } else {
+            
+            let source = { uri: response.uri };
+              
+            // You can also display the image using data:
+            // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+          
+            this.setState({profileImage: source});
+            }
+        });
     }
 
     render() {
@@ -32,48 +76,14 @@ export default class Profile extends Component {
                     </View>
                     <View>
                         <Image 
-                            source={require('../../assets/img/google.png')}
+                            source={this.state.profileImage}
                             style={profileImage}
                         />
                     </View>
                 </View>
                 <Button 
-                    onPress={() => {
-                        var options = {
-                            title: 'Select Avatar',
-                            customButtons: [
-                              {name: 'fb', title: 'Choose Photo from Facebook'},
-                            ],
-                            storageOptions: {
-                              skipBackup: true,
-                              path: 'images'
-                            }
-                          };
-                          ImagePicker.showImagePicker(options, (response) => {
-                            console.log('Response = ', response);
-                          
-                            if (response.didCancel) {
-                              console.log('User cancelled image picker');
-                            }
-                            else if (response.error) {
-                              console.log('ImagePicker Error: ', response.error);
-                            }
-                            else if (response.customButton) {
-                              console.log('User tapped custom button: ', response.customButton);
-                            }
-                            else {
-                              let source = { uri: response.uri };
-                          
-                              // You can also display the image using data:
-                              // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-                          
-                              this.setState({
-                                avatarSource: source
-                              });
-                            }
-                          });
-                    }}
                     title='Click'
+                    onPress={this.uploadProfilePicture.bind(this)}
                 />
             </ScrollView>
         );
