@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { TextField, CircularButton } from '../components';
+import { isValidEmail } from '../common/TextValidator';
 
-export default class CreateAccount extends Component {
+export default class CreateAccountEmail extends Component {
     static navigatorStyle = {
         navBarBackgroundColor: '#007e8c',
         navBarNoBorder: true,
@@ -23,8 +24,7 @@ export default class CreateAccount extends Component {
         super(props);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.state = { 
-            fullName: '',
-            designation: '',
+            email: '',
             nextButtonEnabled: false
         };
       }
@@ -39,8 +39,8 @@ export default class CreateAccount extends Component {
 
     onNextButtonPress() {
         this.props.navigator.push({
-            screen: 'RoundBook.CreateAccountEmail',
-            passProps: this.state,
+            screen: 'RoundBook.CreateAccountPassword',
+            passProps: [this.state, this.props.designation, this.props.fullName],
             animated: true
         });
     }
@@ -54,23 +54,16 @@ export default class CreateAccount extends Component {
 
         return(
             <ScrollView style={container}>
-                <Text style={title}>What's your name?</Text>
+                <Text style={title}>And, your email?</Text>
                 <View style={textfieldContainer}>
                     <TextField 
                         autoCorrect={false}
-                        onChangeText={fullName => {
-                            const isValid = fullName.length > 0 && this.state.designation.length > 0;
-                            this.setState({fullName, nextButtonEnabled: isValid});                        
-                        }}
-                    >FULL NAME
-                    </TextField>
-                    <TextField 
-                        autoCorrect={false}
-                        onChangeText={designation => {
-                            const isValid = this.state.fullName.length > 0 && designation.length > 0;
-                            this.setState({designation, nextButtonEnabled: isValid});
-                        }}
-                    >DESIGNATION
+                        autoCapitalize={'none'}
+                        onChangeText={(email) => { 
+                            const isValid = isValidEmail(email);
+                            this.setState({ email, nextButtonEnabled: isValid });
+                    }}
+                    >EMAIL ADDRESS
                     </TextField>
                 </View>
                 <View style={buttonContainer}>

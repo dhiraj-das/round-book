@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { TextField, CircularButton } from '../components';
 
-export default class CreateAccount extends Component {
+export default class CreateAccountPassword extends Component {
     static navigatorStyle = {
         navBarBackgroundColor: '#007e8c',
         navBarNoBorder: true,
@@ -23,9 +23,8 @@ export default class CreateAccount extends Component {
         super(props);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.state = { 
-            fullName: '',
-            designation: '',
-            nextButtonEnabled: false
+            password: '',
+            nextButtonEnabled: false 
         };
       }
 
@@ -38,41 +37,32 @@ export default class CreateAccount extends Component {
     }
 
     onNextButtonPress() {
-        this.props.navigator.push({
-            screen: 'RoundBook.CreateAccountEmail',
-            passProps: this.state,
-            animated: true
-        });
+        
     }
     
     render() {
         const { container, 
             title, 
             textfieldContainer,
-            buttonContainer 
+            buttonContainer,
+            passwordHintStyle 
         } = styles;
 
         return(
             <ScrollView style={container}>
-                <Text style={title}>What's your name?</Text>
+                <Text style={title}>Create a password</Text>
                 <View style={textfieldContainer}>
                     <TextField 
+                        onChangeText={(password) => {
+                        const isValid = password.length > 5;
+                        this.setState({ password, nextButtonEnabled: isValid });
+                    }}
                         autoCorrect={false}
-                        onChangeText={fullName => {
-                            const isValid = fullName.length > 0 && this.state.designation.length > 0;
-                            this.setState({fullName, nextButtonEnabled: isValid});                        
-                        }}
-                    >FULL NAME
-                    </TextField>
-                    <TextField 
-                        autoCorrect={false}
-                        onChangeText={designation => {
-                            const isValid = this.state.fullName.length > 0 && designation.length > 0;
-                            this.setState({designation, nextButtonEnabled: isValid});
-                        }}
-                    >DESIGNATION
+                        secureTextEntry
+                    >PASSWORD
                     </TextField>
                 </View>
+                <Text style={passwordHintStyle}>Your password must be 6 or more characters long.</Text>
                 <View style={buttonContainer}>
                     <CircularButton
                         onPress={this.state.nextButtonEnabled ? this.onNextButtonPress.bind(this) : undefined}
@@ -109,5 +99,12 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         marginRight: 30,
         marginTop: 20
+    },
+    passwordHintStyle: {
+        color: '#f7fbfb',
+        paddingTop: 2,
+        paddingLeft: 30,
+        fontFamily: 'CircularStd-Medium',
+        fontSize: 10
     }
 });

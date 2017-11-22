@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { signOut } from '../managers/AuthManager';
+import ImagePicker from 'react-native-image-picker';
 import { 
     View, 
     Text, 
@@ -8,8 +10,6 @@ import {
     Button, 
     Alert 
 } from 'react-native';
-import { signOut } from '../managers/AuthManager';
-import ImagePicker from 'react-native-image-picker';
 
 export default class Profile extends Component {
     static navigatorStyle = {
