@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { TextField } from '../components';
+import QRCodeScanner from 'react-native-qrcode-scanner';
 
-export default class SelectWard extends Component {
+export default class JoinWard extends Component {
     static navigatorStyle = {
         navBarBackgroundColor: 'white',
         navBarNoBorder: true,
@@ -12,18 +13,6 @@ export default class SelectWard extends Component {
     constructor(props) {
         super(props);
         this.state = {user: ''};
-    }
-
-    createNewWard() {
-
-    }
-
-    joinWard() {
-        this.props.navigator.showModal({
-            screen: "RoundBook.JoinWard",
-            passProps: {},
-            navigatorStyle: {},
-          });
     }
     
     render() {
@@ -37,22 +26,7 @@ export default class SelectWard extends Component {
 
         return(
             <View style={container}>
-                <View>
-                    <Image source={require('../../assets/img/ward.png')} style={image} />
-                    <Text style={hint}>Get started by joining a ward {"\n"}or create your own.</Text>
-                </View>
-                <View style={buttonContainer}>
-                    <TouchableOpacity style={button} onPressOut={this.joinWard.bind(this)}>
-                        <Text style={buttonText}>
-                            Join Ward
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[button, {marginTop: 15}]} onPressOut={this.createNewWard.bind(this)}>
-                        <Text style={buttonText}>
-                            Create new ward
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                <Text style={hint}>Enter Pin or Scan QR code</Text>
             </View>
         )
     }

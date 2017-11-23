@@ -9,6 +9,7 @@ import Home from '../screens/Home';
 import Splash from '../screens/Splash';
 import Profile from '../screens/Profile';
 import SelectWard from '../screens/SelectWard';
+import JoinWard from '../screens/JoinWard';
 
 export function registerScreens(store, Provider) {
 	Navigation.registerComponent('RoundBook.Onboarding', () => Onboarding, store, Provider);
@@ -20,4 +21,5 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('RoundBook.Splash', () => Splash, store, Provider);
 	Navigation.registerComponent('RoundBook.Profile', () => Profile, store, Provider);
 	Navigation.registerComponent('RoundBook.SelectWard', () => SelectWard, store, Provider);
+	Navigation.registerComponent('RoundBook.JoinWard', () => JoinWard, store, Provider);
 }

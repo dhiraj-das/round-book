@@ -73,7 +73,7 @@ export default class Splash extends Component {
           });
     }
 
-    componentDidMount() {
+    componentDidMount() {        
         var unsubscriber = firebase.auth().onAuthStateChanged(user => {
             unsubscriber();
             this.setState({isLoading: false});
