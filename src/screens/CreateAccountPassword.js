@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
-import { TextField, CircularButton } from '../components';
+import { TextField, CircularButton, ProgressHUD } from '../components';
 import { createUser } from '../managers/AuthManager';
 
 export default class CreateAccountPassword extends Component {
@@ -28,7 +28,8 @@ export default class CreateAccountPassword extends Component {
             email: this.props.user.email,
             name: this.props.user.name,
             designation: this.props.user.designation,
-            nextButtonEnabled: false 
+            nextButtonEnabled: false,
+            isLoading: false 
         };
       }
 
@@ -41,19 +42,33 @@ export default class CreateAccountPassword extends Component {
     }
 
     onNextButtonPress() {
+        this.setState({isLoading: true});
         const { name, password, email, designation } = this.state;
-        
         createUser(email, password, (user, error) => {
             if(user) {
                 user.updateProfile({
                     displayName: name, 
                     photoUrl: null
-                }).then(
-                    console.log('saved user data')
-                );
+                }).then(() => {
+                    this.setState({isLoading: false});
+                    this.showSelectWard();
+                }).catch((error) => {
+                    this.setState({isLoading: false});
+                    console.log(error);
+                });
             } else {
                 console.log(error);
+                this.setState({isLoading: false});
             }
+        });
+    }
+
+    showSelectWard() {
+        this.props.navigator.resetTo({
+            screen: 'RoundBook.SelectWard',
+            passProps: {},
+            animated: true,
+            backButtonHidden: true
         });
     }
     
@@ -68,6 +83,7 @@ export default class CreateAccountPassword extends Component {
         return(
             <ScrollView style={container}>
                 <Text style={title}>Create a password</Text>
+                <ProgressHUD isAnimating={this.state.isLoading}/>
                 <View style={textfieldContainer}>
                     <TextField 
                         onChangeText={(password) => {
@@ -83,7 +99,7 @@ export default class CreateAccountPassword extends Component {
                 <View style={buttonContainer}>
                     <CircularButton
                         onPress={this.state.nextButtonEnabled ? this.onNextButtonPress.bind(this) : undefined}
-                        enabled={this.state.nextButtonEnabled}
+                        enabled={this.state.nextButtonEnabled && !this.state.isLoading }
                     />
                 </View>
             </ScrollView>

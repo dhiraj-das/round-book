@@ -7,6 +7,7 @@ import com.facebook.react.modules.core.PermissionListener;
 import com.imagepicker.permissions.OnImagePickerPermissionsCallback;
 import com.reactnativenavigation.NavigationApplication;
 import com.imagepicker.ImagePickerPackage;
+import com.lwansbrough.RCTCamera.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +28,8 @@ public class MainApplication extends NavigationApplication implements OnImagePic
         return Arrays.<ReactPackage>asList(
                 new RNFirebasePackage(),
                 new RNFirebaseAuthPackage(),
-                new ImagePickerPackage()
+                new ImagePickerPackage(),
+                new RCTCameraPackage()
         );
     }
 

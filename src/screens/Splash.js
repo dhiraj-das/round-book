@@ -28,6 +28,16 @@ export default class Splash extends Component {
         };
     }
 
+    showSelectWard() {
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'RoundBook.SelectWard',
+                navigatorStyle: {},
+                navigatorButtons: {}
+            }  
+        });
+    }
+
     showHome() {
         Navigation.startTabBasedApp({
             tabs: [
@@ -68,7 +78,8 @@ export default class Splash extends Component {
             unsubscriber();
             this.setState({isLoading: false});
             if(user) {
-                this.showHome();
+                //this.showHome();
+                this.showSelectWard()
                 return;
             }
             this.props.navigator.resetTo({
