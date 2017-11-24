@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
         color: 'black',
         backgroundColor: '#EAEAEA',
         borderRadius: 5,
+        paddingLeft: 5,
         marginRight: 10
     },
     textInputContainer: {
