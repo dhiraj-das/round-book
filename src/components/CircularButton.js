@@ -43,12 +43,6 @@ const styles = StyleSheet.create({
         width: 50,
         borderRadius: 25
     },
-    label: {
-        fontFamily: 'CircularStd-Medium',
-        fontSize: 10,
-        color: '#f7fbfb',
-        flex: 1,
-    },
     image: {
         height: 20,
         aspectRatio: 0.63,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { TextField } from '../components';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import { CircularButton } from '../components';
 
 export default class JoinWard extends Component {
     static navigatorStyle = {
@@ -12,21 +12,72 @@ export default class JoinWard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {user: ''};
+        this.state = {
+            nextButtonEnabled: false,
+            wardId: ''
+        };
+    }
+
+    onNextButtonPress() {
+        //TODO: check validity of ward id and launch ward.
+        console.log('enabled');
+    }
+
+    onScaningCompleted() {
+        this.props.navigator.dismissModal();
+        //TODO: check validity of ward id and launch ward.
+    }
+
+    onDismissPressed() {
+        this.props.navigator.dismissModal();
     }
     
     render() {
-        const { container, 
-            image,
+        const { container,
             hint,
             button,
             buttonText,
-            buttonContainer
+            buttonContainer,
+            textInputContainer,
+            textInput
         } = styles;
 
         return(
             <View style={container}>
-                <Text style={hint}>Enter Pin or Scan QR code</Text>
+                <Text style={hint}>Enter Ward-ID or Scan QR code</Text>
+                <View style={textInputContainer}>
+                    <TextInput 
+                        style={textInput}
+                        onChangeText={(wardId) => {
+                            const isValid = wardId.length > 0;
+                            this.setState({ wardId, nextButtonEnabled: isValid });
+                        }}
+                        autoCorrect={false}
+                        autoCapitalize={'none'}
+                        underlineColorAndroid='transparent'
+                    />
+                    <TouchableOpacity 
+                        style={this.state.nextButtonEnabled ? styles.circularButtonContainerActive : styles.circularButtonContainerDisabled}
+                        onPress={this.state.nextButtonEnabled ? this.onNextButtonPress.bind(this) : undefined}
+                    >
+                        <Image
+                            source={require('../../assets/img/chevron.png')}
+                            style={styles.image}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <QRCodeScanner
+                 onRead={this.onScaningCompleted.bind(this)}
+                 reactivate
+                 showMarker
+                />
+                <TouchableOpacity 
+                    style={button} 
+                    onPressOut={this.onDismissPressed.bind(this)}>
+                        <Text style={buttonText}>
+                            Cancel
+                        </Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -37,18 +88,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flex: 1
     },
-    image: {
-        marginTop: 50,
-        height: 100,
-        opacity: 0.15,
-        width: 100,
-        alignSelf: 'center'
-    },
     hint: {
         paddingTop: 10,
-        color: '#C0C0C0',
+        color: 'black',
         fontFamily: 'CircularStd-Medium',
-        fontSize: 15,
+        fontSize: 17,
         textAlign: 'center'
     },
     buttonContainer: {
@@ -57,18 +101,49 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     button: {
-        paddingLeft: 17,
-        paddingRight: 17,
-        paddingTop: 13,
-        paddingBottom: 13,
-        borderRadius: 5,
-        backgroundColor: '#008080'
+        height: 44,
+        justifyContent: 'center',
+        backgroundColor: '#006e7a'
     },
     buttonText: {
         color: 'white',
         fontFamily: 'CircularStd-Medium',
-        fontSize: 15,
+        fontSize: 17,
         fontWeight: 'bold',
         textAlign: 'center'
+    },
+    textInput: {
+        flex: 1,
+        fontFamily: 'CircularStd-Medium',
+        fontSize: 20,
+        color: 'black',
+        backgroundColor: '#EAEAEA',
+        borderRadius: 5,
+        marginRight: 10
+    },
+    textInputContainer: {
+        margin: 10,
+        flexDirection: 'row'
+    },
+    circularButtonContainerDisabled: {
+        backgroundColor: 'grey',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 50,
+        width: 50,
+        borderRadius: 25
+    },
+    circularButtonContainerActive: {
+        backgroundColor: '#006e7a',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 50,
+        width: 50,
+        borderRadius: 25
+    },
+    image: {
+        height: 20,
+        aspectRatio: 0.63,
+        tintColor: '#EAEAEA'
     }
 });

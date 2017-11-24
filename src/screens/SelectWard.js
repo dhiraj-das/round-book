@@ -11,7 +11,6 @@ export default class SelectWard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {user: ''};
     }
 
     createNewWard() {
@@ -21,8 +20,7 @@ export default class SelectWard extends Component {
     joinWard() {
         this.props.navigator.showModal({
             screen: "RoundBook.JoinWard",
-            passProps: {},
-            navigatorStyle: {},
+            backButtonHidden: true
           });
     }
     
