@@ -2,6 +2,8 @@ package com.roundbook;
 
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import io.invertase.firebase.database.RNFirebaseDatabasePackage;
+
 import com.facebook.react.ReactPackage;
 import com.facebook.react.modules.core.PermissionListener;
 import com.imagepicker.permissions.OnImagePickerPermissionsCallback;
@@ -29,7 +31,8 @@ public class MainApplication extends NavigationApplication implements OnImagePic
                 new RNFirebasePackage(),
                 new RNFirebaseAuthPackage(),
                 new ImagePickerPackage(),
-                new RCTCameraPackage()
+                new RCTCameraPackage(),
+                new RNFirebaseDatabasePackage()
         );
     }
 
