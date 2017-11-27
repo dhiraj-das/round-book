@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { CircularButton } from '../components';
+import { CircularButton, ProgressHUD } from '../components';
 import { doesWardExist } from '../managers/DatabaseManager';
 import { showHome } from '../common/ScreenRouter';
 import { 
@@ -23,13 +23,16 @@ export default class JoinWard extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: false,
             nextButtonEnabled: false,
             wardId: ''
         };
     }
 
     onNextButtonPress() {
+        this.setState({isLoading: true});
         doesWardExist(this.state.wardId, (exists) => {
+            this.setState({isLoading: false});
             if(exists) {
                 this.props.navigator.dismissModal().then(() => showHome());
             } else {
@@ -78,11 +81,13 @@ export default class JoinWard extends Component {
                     />
                     <TouchableOpacity 
                         style={this.state.nextButtonEnabled ? styles.circularButtonContainerActive : styles.circularButtonContainerDisabled}
-                        onPress={this.state.nextButtonEnabled ? this.onNextButtonPress.bind(this) : undefined}
+                        onPress={this.state.nextButtonEnabled && !this.state.isLoading ? this.onNextButtonPress.bind(this) : undefined}
                     >
+                        <ProgressHUD isAnimating={this.state.isLoading}/>
                         <Image
                             source={require('../../assets/img/chevron.png')}
                             style={styles.image}
+                            opacity={this.state.isLoading ? 0:1}
                         />
                     </TouchableOpacity>
                 </View>
