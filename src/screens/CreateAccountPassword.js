@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { TextField, CircularButton, ProgressHUD } from '../components';
 import { createUser } from '../managers/AuthManager';
+import { showSelectWard } from '../common/ScreenRouter';
 
 export default class CreateAccountPassword extends Component {
     static navigatorStyle = {
@@ -51,7 +52,7 @@ export default class CreateAccountPassword extends Component {
                     photoUrl: null
                 }).then(() => {
                     this.setState({isLoading: false});
-                    this.showSelectWard();
+                    showSelectWard();
                 }).catch((error) => {
                     this.setState({isLoading: false});
                     console.log(error);
@@ -60,15 +61,6 @@ export default class CreateAccountPassword extends Component {
                 console.log(error);
                 this.setState({isLoading: false});
             }
-        });
-    }
-
-    showSelectWard() {
-        this.props.navigator.resetTo({
-            screen: 'RoundBook.SelectWard',
-            passProps: {},
-            animated: true,
-            backButtonHidden: true
         });
     }
     

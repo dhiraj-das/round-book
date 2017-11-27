@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { CircularButton } from '../components';
+import { doesWardExist } from '../managers/DatabaseManager';
+import { showHome } from '../common/ScreenRouter';
+import { 
+    Alert, 
+    View, 
+    Text, 
+    StyleSheet, 
+    TextInput, 
+    TouchableOpacity, 
+    Image 
+} from 'react-native';
 
 export default class JoinWard extends Component {
     static navigatorStyle = {
@@ -19,13 +29,23 @@ export default class JoinWard extends Component {
     }
 
     onNextButtonPress() {
-        //TODO: check validity of ward id and launch ward.
-        console.log('enabled');
+        doesWardExist(this.state.wardId, (exists) => {
+            if(exists) {
+                this.props.navigator.dismissModal().then(() => showHome());
+            } else {
+                Alert.alert(
+                    '',
+                    "Sorry! Could not find a ward associated with that ID. \nPlease check and try again.",
+                    [
+                      {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ]
+                )
+            }
+        });
     }
 
     onScaningCompleted() {
-        this.props.navigator.dismissModal();
-        //TODO: check validity of ward id and launch ward.
+        onNextButtonPress();
     }
 
     onDismissPressed() {
